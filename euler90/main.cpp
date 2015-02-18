@@ -34,6 +34,8 @@ int SQUARES[9][2] = {
     {6, 4},
     {8, 1}};
 int validCombos = 0;
+//int squaresChecks[][] = {{01,0},{04,0},{09,0},{16,0},{25,0},{36,0},{49,0},{64,0},{81,0}};
+int squaresChecks[] = {0,0,0,0,0,0,0,0,0};
 
 
 /**
@@ -106,14 +108,16 @@ void checkCubes(vector<vector<int> > cubes, int posit) {
                 if(cube1.at(i) == SQUARES[j][0]){
                     for(int k = 0; k < 7; k++){
                         if(cube2.at(k) == SQUARES[j][1]){
-                            squaresCheck++;
+                            //squaresCheck++;
+                            squaresChecks[j] = 1;
                         }
                     }
                 }
                 else if (cube2.at(i) == SQUARES[j][0]){
                     for(int k = 0; k < 7; k++){
                         if(cube1.at(k) == SQUARES[j][1]){
-                            squaresCheck++;
+                            //squaresCheck++;
+                            squaresChecks[j] = 1;
                         }
                     }
                 }
@@ -122,11 +126,31 @@ void checkCubes(vector<vector<int> > cubes, int posit) {
         //cout<<squaresCheck<<endl;
         //cout<<validCombos<<endl;
             //Sleep(250);
+        
+        for(int i = 0; i < 9; i++){
+            squaresCheck += squaresChecks[i];
+        }
         if(squaresCheck == 9){
             
             validCombos++;
-        }
+            cout << validCombos << " Valid Combo: ";
+            for(int i = 0; i < 6 ; i++){
+                cout << cube1.at(i) << ", ";
+            }
+            cout<< " :::: ";
+            for(int i = 0; i < 6 ; i++){
+                cout << cube2.at(i) << ", ";
+            }
+            cout << " Squares Checks: ";
+            for(int i = 0; i < 9; i++){
+                cout << squaresChecks[i] << ", ";
+            }
+            cout << endl;
+        }//if valid combo
         squaresCheck = 0;
+        for(int i = 0; i < 9; i++){
+            squaresChecks[i] = 0;
+        }
     }
 
     //cout<<squaresCheck<<endl;
@@ -213,12 +237,12 @@ int main(int argc, char** argv) {
     for(int i = 0; i < validCubes2.size(); i++){
         vector<int>* cube1 = &validCubes2.at(i);
         sixNineCheck(cube1);
-        vector<int> cube = *cube1;
-        for(int j = 0; j < 7; j++){
-            cout<< cube.at(j) << ", ";
+        //vector<int> cube = *cube1;
+        //for(int j = 0; j < 7; j++){
+           // cout<< cube.at(j) << ", ";
             
-        }
-        cout<<endl;
+        //}
+        //cout<<endl;
     }
     cout<<"# Valid Cubes: " << validCount2 << endl;
     
